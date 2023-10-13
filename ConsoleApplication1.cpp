@@ -34,11 +34,18 @@ int output_key_value(const string& name_file) {
         string  product = jsontree.get<string>("product");  //read and save the name in *name*
         cout << "key:" << " " << "product" << "  " << "value:" << " " << product << endl;      //getting the output of all
         cout << "key:" << " " << "version" << "  " << "value:" << " " << version << endl;
-        for (pt::ptree::value_type& v : jsontree.get_child("LPR"))
-        {
-            cout << "key:" << " " << v.first << "  " << "value:" << " " << v.second.data() << endl;
+        pt::ptree::const_assoc_iterator iterator;
+        iterator = jsontree.find("LPR");
+        if (iterator != jsontree.not_found()) {
+            for (pt::ptree::value_type& v : jsontree.get_child("LPR"))
+            {
+                cout << "key:" << " " << v.first << "  " << "value:" << " " << v.second.data() << endl;
+            }
+            return 0;
         }
-        return 0;
+        else {
+            cout << "LPR not find";
+        }
     }
     else {
         cout << "product not find";
